@@ -1,0 +1,107 @@
+Install Mikhmon dan Mikbotam pada STB (HG860P/B860H) Armbian Linux
+==================================================================
+Requirement >> Armbian_5.84_Aml-s905_Debian Server/Desktop
+               Openmediavault
+               omvextrasorg_latest_all4 OMV Package
+               https://youtu.be/3r7kKW8TXi0
+
+Pre Setup
+---------
+Change port OMV
+Setting Date & Time
+
+Install Package Nginx + MySQL
+*****************************
+Setup Nginx
+------------
+Nginx > Pools > Add 
+Name		: php
+Description	: phpmyadmin
+User		: www-data
+Group		: www-data
+Save Apply
+
+Nginx > Servers > Add
+Enable		: Yes
+Directory	: None 
+Enable PHP	: Yes
+PHP-FPM Pool	: php
+index.php	: Yes
+Save Apply
+
+Nginx > Settings
+Enable		: Yes
+Save Apply
+
+Setup MySQL
+-----------
+Enable 		: Yes
+Enable SQL 	: Yes
+Save Apply
+		
+Install Php
+-----------
+sudo apt-get update && sudo apt-get upgrade -y 
+sudo apt-get install phpmyadmin php7.0-curl
+sudo ln -s /usr/share/phpmyadmin /usr/share/nginx/html
+sudo service php7.0-fpm restart
+sudo service nginx restart
+
+Install Mikhmon
+---------------
+WinSCP:
+Copy folder mikhmon > /usr/share/nginx/html
+
+Terminal:
+cd /usr/share/nginx/html
+chown -R www-data:www-data mikhmon
+
+Browser:
+IP/mikhmon  > default login = mikhmon/1234
+
+Install Mikbotam
+----------------
+Create user for MySQL & phpMyAdmin
+Terminal:
+sudo mysql -p -u root
+CREATE USER 'admin'@'%' IDENTIFIED BY 'admin1234';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION;
+
+phpMyAdmin:
+create database > db_mikbotam_stb
+impor > Newdatabase.sql (pada mikbotam > config) > Go
+
+WinSCP:
+Copy folder mikbotam > /usr/share/nginx/html
+Edit: mikbotam > config > system.config.php
+                           'database_name' => 'db_mikbotam_stb',
+                           'username' => 'admin',
+                           'password' => 'admin1234',
+Terminal:
+cd /usr/share/nginx/html
+chown -R www-data:www-data mikbotam
+
+Browser:
+IP/mikbotam  > default login = admin/admin
+Configurasi :
+Mikrotik > Port = port API Mikrotik (IP > Services), silahkan sesuaikan
+Setting > Setting Voucher : silahkan dibaca pada grup facebook mikbotam / official website
+
+Auto Run on Boot
+WinSCP >> /etc/rc.local
+sleep 10 && cd /usr/share/nginx/html/mikbotam/Saldo && php Core_Saldo_Nonsaldo.php > /dev/null 2>&1&
+
+Video :
+Flash STB HG680P Armbian Linux (Dual Boot)                     https://youtu.be/X0Mwl7dAy9U
+Flash STB B860H Android to Armbian and Armbian to Android      https://youtu.be/fzf6uXTZ8pw
+Install Openmediavault STB HG680P Armbian Linux                https://youtu.be/3r7kKW8TXi0
+Install Nginx MySQL phpMyAdmin Mikhmon OMV                     https://youtu.be/RuUOBpQrNVM
+Install MPD Server STB Armbian Linux                           https://youtu.be/Ku8pCu1W-mU
+Install Mikhmon dan Mikbotam                                   https://youtu.be/6kB6-ToJU2g
+
+Grup Facebook ARMBIAN LINUX STB HG680P B860H [ID]:
+https://www.facebook.com/groups/447949046027700/
+
+Regrads,
+FuadSalim
+fb.com/fuad.salim.drg
