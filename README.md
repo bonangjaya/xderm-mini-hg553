@@ -5,5 +5,5 @@
 - usahakan gunakan kuota reguler atau injeck terlebih dahulu agar saat penginstalan lancar.
 - paste perintah dibawah ke terminal stb openwrt anda.
 
-wget --no-check-certificate "https://raw.githubusercontent.com/vitoharhari/xderm-mini/main/install-xderm-mini" -P /usr/bin/ && chmod 777 /usr/bin/install-xderm-mini && bash install-xderm-mini
+wget --no-check-certificate "https://raw.githubusercontent.com/bonangjaya/xderm-mini-hg553/master/xderm-mini" -P /usr/bin/ && chmod 777 /usr/bin/install-xderm-mini && bash install-xderm-mini
 
